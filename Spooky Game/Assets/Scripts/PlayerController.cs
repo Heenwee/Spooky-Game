@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     bool slash;
     float slashBuffer;
     float resetSlashNr;
+    public float slashForce;
     public GameObject slashCol;
     public AudioSource slashSource;
     public AudioClip slashSound;
@@ -67,7 +68,6 @@ public class PlayerController : MonoBehaviour
     void Move(float x)
     {
         if (canMove) rb.AddForce(Vector2.right * x * speedUp);
-        else rb.velocity = new Vector2(0, rb.velocity.y);
     }
     void ClampVel(float x)
     {
@@ -151,8 +151,18 @@ public class PlayerController : MonoBehaviour
             slash = false;
         }
     }
+    public void StartSlash()
+    {
+        rb.velocity = new Vector2(0, rb.velocity.y);
+    }
     public void Slash()
     {
+        if (xInput > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
+        if (xInput < 0) transform.rotation = Quaternion.Euler(0, 180, 0);
+
+
+        rb.AddForce(new Vector2(xInput * slashForce, 0));
+
         slashNr *= -1;
         resetSlashNr = 0.5f;
 
