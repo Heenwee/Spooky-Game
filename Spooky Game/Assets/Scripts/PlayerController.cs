@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     bool slash;
     float slashBuffer;
     float resetSlashNr;
+    public GameObject slashCol;
+    public AudioSource slashSource;
+    public AudioClip slashSound;
 
     [HideInInspector]
     public bool clamp = true, canMove = true;
@@ -94,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            if (jump)
+            if (jump && canMove)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
 
@@ -152,6 +155,16 @@ public class PlayerController : MonoBehaviour
     {
         slashNr *= -1;
         resetSlashNr = 0.5f;
+
+        StartCoroutine(SlashCol());
+
+        slashSource.PlayOneShot(slashSound);
+    }
+    IEnumerator SlashCol()
+    {
+        slashCol.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        slashCol.SetActive(false);
     }
     #endregion
 }

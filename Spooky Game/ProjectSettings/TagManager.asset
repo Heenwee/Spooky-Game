@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Slash
   layers:
   - Default
   - TransparentFX
@@ -49,4 +51,7 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 1777383565
+    locked: 0
+  - name: Effects
+    uniqueID: 2709789559
     locked: 0
