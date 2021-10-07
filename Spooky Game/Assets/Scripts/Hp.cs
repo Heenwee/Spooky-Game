@@ -14,6 +14,9 @@ public class Hp : MonoBehaviour
     LayerMask layerMask;
     public GameObject blood;
 
+    [HideInInspector]
+    public bool hit, death;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,8 @@ public class Hp : MonoBehaviour
 
     public void TakeDamage(int dmg, Transform colPos)
     {
+        hit = true;
+
         currentHp -= dmg;
         if (currentHp <= 0) Die();
         anim.SetTrigger("Hit");
@@ -56,10 +61,20 @@ public class Hp : MonoBehaviour
     }
     void Die()
     {
+        death = true;
         anim.SetBool("Dead", true);
         GetComponent<Rigidbody2D>().simulated = false;
 
         Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+        foreach(MonoBehaviour s in scripts)
+        {
+            if(s != this)
+            {
+                s.enabled = false;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)

@@ -5,4 +5,5 @@ using UnityEngine;
 public class Dmg : MonoBehaviour
 {
     public int dmg;
+    public float knockback;
 }

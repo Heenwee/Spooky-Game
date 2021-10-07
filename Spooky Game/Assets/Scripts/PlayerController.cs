@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f, speedUp = 75f;
     float currentSpeed;
 
-    bool isGrounded;
+    [HideInInspector]
+    public bool isGrounded;
     bool jump;
     bool holding;
     float jumpBuffer;
@@ -58,6 +59,8 @@ public class PlayerController : MonoBehaviour
 
         resetSlashNr -= Time.deltaTime;
         if (resetSlashNr <= 0) slashNr = 1;
+
+        anim.SetBool("IsGrounded", isGrounded);
     }
     private void FixedUpdate()
     {
@@ -102,7 +105,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 0);
 
                 Vector2 jumpforce = (Vector3.up * Mathf.Sqrt(jumpHeight * -2.0f * Physics2D.gravity.y * rb.gravityScale));
-                rb.velocity += jumpforce;
+                rb.velocity = jumpforce + Vector2.right * rb.velocity.x;
 
                 jump = false;
                 holding = true;
