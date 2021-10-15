@@ -5,6 +5,7 @@ using UnityEngine;
 public class Hp : MonoBehaviour
 {
     Animator anim;
+    Rigidbody2D rb;
 
     public int hp;
     int currentHp;
@@ -21,6 +22,7 @@ public class Hp : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         currentHp = hp;
         layerMask |= (1 << LayerMask.NameToLayer("Ground"));
     }
@@ -34,6 +36,8 @@ public class Hp : MonoBehaviour
     public void TakeDamage(int dmg, Transform colPos)
     {
         hit = true;
+
+        rb.velocity = Vector2.zero;
 
         currentHp -= dmg;
         if (currentHp <= 0) Die();

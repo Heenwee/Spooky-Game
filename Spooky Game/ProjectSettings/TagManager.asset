@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Slash
   - Enemy_Attack
+  - Ground
   layers:
   - Default
   - TransparentFX

@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         if(isGrounded)
         {
-            if(x == 0) rb.velocity = new Vector2(0, rb.velocity.y);
+            if(x == 0 || x * rb.velocity.x < 0) rb.velocity = new Vector2(0, rb.velocity.y);
         }
         else
         {

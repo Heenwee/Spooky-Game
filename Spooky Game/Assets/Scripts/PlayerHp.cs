@@ -37,6 +37,7 @@ public class PlayerHp : MonoBehaviour
             transform.Rotate(new Vector3(0, 180, 0));
         }
         pc.isGrounded = false;
+        rb.velocity = Vector2.zero;
         Vector2 knockbackVel = new Vector2(knockback, knockback / 2);
         rb.AddForce(-knockbackVel.x * transform.right + knockbackVel.y * transform.up);
         Instantiate(hitEffect, transform.position, transform.rotation);

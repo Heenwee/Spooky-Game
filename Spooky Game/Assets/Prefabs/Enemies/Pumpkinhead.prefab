@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1200934112}
   - component: {fileID: 1200934113}
+  - component: {fileID: 1276403913}
   m_Layer: 10
   m_Name: Slash_col
   m_TagString: Enemy_Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1200934112
 Transform:
   m_ObjectHideFlags: 0
@@ -57,6 +58,50 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1276403913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200934111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539e271a0170f0d439d610d26af43023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 30
+  knockback: 1250
+--- !u!1 &349276596461922628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3953875101650368707}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3953875101650368707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349276596461922628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8089224371033666956}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8089224371033666952
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1200934112}
+  - {fileID: 3953875101650368707}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -217,6 +263,8 @@ MonoBehaviour:
   hitEffect: {fileID: 7328975221027700416, guid: e5629948148fd284f9af7123c0c42f9e, type: 3}
   deathEffect: {fileID: 6257211678452323781, guid: ec2bad4923b2dea4e87e7cf038a17ae3, type: 3}
   blood: {fileID: 1110491169502887470, guid: d0259889df69fb84ba5ca5d0b222370a, type: 3}
+  hit: 0
+  death: 0
 --- !u!114 &1262814689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,3 +278,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slashCol: {fileID: 1200934111}
+  speed: 2
+  speedUp: 50
+  sightRange: 10
+  sightMask:
+    serializedVersion: 2
+    m_Bits: 192
+  slashRange: 1
+  fireRate: 5
+  fireRateMult: 0.75
+  idleTime: 4
+  idleTimeMult: 0.5
+  patrolTime: 2
+  patrolTimeMult: 0.5
+  patrolSpeed: 0.3
+  patrolSpeedUp: 100
+  edgeDetection: {fileID: 3953875101650368707}
+  edgeDropRange: 1
+  forwardRange: 1
