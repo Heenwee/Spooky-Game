@@ -114,7 +114,7 @@ public class PumpkinheadBehaviour : MonoBehaviour
             Debug.LogWarning("raycast not working");
             Deactivate();
         }
-        if(hit.transform.CompareTag("Player"))
+        else if(hit.transform.CompareTag("Player"))
         {
             Active();
             Activate();
@@ -148,6 +148,7 @@ public class PumpkinheadBehaviour : MonoBehaviour
     #region States
     public IEnumerator Idle()
     {
+        slashCol.SetActive(false);
         idling = true;
         idleDur = Random.Range(idleTime * idleTimeMult, idleTime);
         while (idling)

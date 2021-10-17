@@ -15,6 +15,8 @@ public class Hp : MonoBehaviour
     LayerMask layerMask;
     public GameObject blood;
 
+    public GameObject[] objectsToDestroy;
+
     [HideInInspector]
     public bool hit, death;
 
@@ -79,6 +81,7 @@ public class Hp : MonoBehaviour
                 s.enabled = false;
             }
         }
+        foreach (GameObject obj in objectsToDestroy) Destroy(obj);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
