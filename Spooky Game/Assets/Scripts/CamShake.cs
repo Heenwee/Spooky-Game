@@ -1,31 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CamShake : MonoBehaviour
 {
-    public IEnumerator Shake(float duration, float magnitude)
+    CinemachineVirtualCamera cam;
+    float startingIntesity;
+    float shakeTimer;
+    float shakeTimerTotal;
+
+    public static CamShake instance;
+
+    private void Awake()
     {
-        transform.localPosition = new Vector3(0, 0, -10);
-        Vector3 originalPos = transform.localPosition;
+        instance = this;
+        cam = GetComponent<CinemachineVirtualCamera>();
+    }
 
-        float elapsed = 0.0f;
+    public void ShakeCam(float intensity, float duration)
+    {
+        CinemachineBasicMultiChannelPerlin perlin =
+            cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        while (elapsed < duration)
+        perlin.ReSeed();
+
+        perlin.m_AmplitudeGain = intensity;
+
+        if (intensity > startingIntesity) startingIntesity = intensity;
+        shakeTimer = duration;
+        shakeTimerTotal = duration;
+    }
+
+    private void Update()
+    {
+        if (shakeTimer > 0)
         {
-            if (Time.timeScale != 0)
-            {
-                float x = Random.Range(-1f, 1f) * magnitude;
-                float y = Random.Range(-1f, 1f) * magnitude;
+            shakeTimer -= Time.deltaTime;
+            CinemachineBasicMultiChannelPerlin perlin =
+                cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-                transform.localPosition = new Vector3(x, originalPos.y + y, originalPos.z);
-                elapsed += Time.deltaTime;
-            }
-            else elapsed = duration;
-
-            yield return null;
+            perlin.m_AmplitudeGain =
+                Mathf.Lerp(startingIntesity, 0f, 1 - (shakeTimer / shakeTimerTotal));
         }
-
-        transform.localPosition = originalPos;
+        else startingIntesity = 0;
     }
 }

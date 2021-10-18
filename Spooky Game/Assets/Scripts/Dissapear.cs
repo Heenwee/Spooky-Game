@@ -36,7 +36,7 @@ public class Dissapear : MonoBehaviour
             trailParticles = Instantiate(trailParticles, transform.position, transform.rotation);
         }
 
-        StartCoroutine(Camera.main.GetComponent<CamShake>().Shake(camShakeDur, camShakeMag));
+        CamShake.instance.ShakeCam(camShakeMag, camShakeDur);
     }
 
     private void OnTriggerEnter2D(Collider2D col)

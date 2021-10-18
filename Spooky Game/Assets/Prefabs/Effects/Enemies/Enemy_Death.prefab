@@ -9770,5 +9770,5 @@ MonoBehaviour:
   DissapearTime: 1
   trail: 0
   trailParticles: {fileID: 0}
-  camShakeDur: 0.1
-  camShakeMag: 0.1
+  camShakeDur: 0.15
+  camShakeMag: 0.5
