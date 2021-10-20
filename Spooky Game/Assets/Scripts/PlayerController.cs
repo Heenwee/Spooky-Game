@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f, speedUp = 75f;
     float currentSpeed;
 
+    public float dashForce;
+    bool dashing;
+
     [HideInInspector]
     public bool isGrounded;
     bool jump;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, radius, groundMask);
         Jump();
+        Dash();
 
         xInput = Input.GetAxisRaw("Horizontal");
 
@@ -74,19 +78,22 @@ public class PlayerController : MonoBehaviour
     }
     void ClampVel(float x)
     {
-        Vector2 velocity = new Vector2(rb.velocity.x, 0);
-        Vector2 vel = Vector2.ClampMagnitude(velocity, speed);
-        rb.velocity = new Vector2(vel.x, rb.velocity.y);
-
-        if(isGrounded)
+        if(!dashing)
         {
-            if(x == 0 || x * rb.velocity.x < 0) rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-        else
-        {
-            if (x == 0) rb.velocity *= new Vector2(0.95f, 1);
+            Vector2 velocity = new Vector2(rb.velocity.x, 0);
+            Vector2 vel = Vector2.ClampMagnitude(velocity, speed);
+            rb.velocity = new Vector2(vel.x, rb.velocity.y);
 
-            if (rb.velocity.y > 0 && !holding) rb.velocity *= new Vector2(1, 0.9f);
+            if (isGrounded)
+            {
+                if (x == 0 || x * rb.velocity.x < 0) rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            else
+            {
+                if (x == 0) rb.velocity *= new Vector2(0.95f, 1);
+
+                if (rb.velocity.y > 0 && !holding) rb.velocity *= new Vector2(1, 0.9f);
+            }
         }
     }
 
@@ -120,6 +127,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Dash()
+    {
+        if(Input.GetButtonDown("Dash") && canMove)
+        {
+            rb.velocity = Vector2.zero;
+            rb.velocity = (transform.right * dashForce);
+            canMove = false;
+            dashing = true;
+            anim.SetTrigger("Dash");
+        }
+    }
+
     void Rotate(float x)
     {
         if (canMove)
@@ -136,6 +155,7 @@ public class PlayerController : MonoBehaviour
     public void CanMove()
     {
         canMove = true;
+        dashing = false;
     }
 
     #region Attacks
