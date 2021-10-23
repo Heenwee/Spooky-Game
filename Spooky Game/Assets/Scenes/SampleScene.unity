@@ -41194,6 +41194,7 @@ MonoBehaviour:
   upSectionLength: 15
   branchLenghtMin: 4
   branchLenghtMax: 6
+  branchNr: 5
 --- !u!4 &1920141228
 Transform:
   m_ObjectHideFlags: 0
