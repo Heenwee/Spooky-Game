@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class MapGeneration : MonoBehaviour
 {
-    public Transform grid;
+    public GameObject grid;
 
     public static bool generated;
     bool mainBranchGenerated, branchesGenerated, tilesPlaced;
@@ -27,7 +27,7 @@ public class MapGeneration : MonoBehaviour
     public RuleTile tile;
     public Tilemap tilemap;
     public int edgeOffset;
-    public int distanceFromLine = 5;
+    public float distanceFromLine;
     public Tilemap[] rooms;
 
     // Start is called before the first frame update
@@ -193,19 +193,21 @@ public class MapGeneration : MonoBehaviour
         foreach(Vector2 p in pointPos)
         {
             var room = Instantiate(rooms[0], Vector2.zero, Quaternion.identity);
-            room.transform.parent = grid;
+            room.transform.parent = grid.transform;
             room.transform.position = p;
 
             Tilemap roomTiles = room.GetComponent<Tilemap>();
+            roomTiles.CompressBounds();
             for (int x = roomTiles.cellBounds.min.x; x < roomTiles.cellBounds.max.x; x++)
             {
                 for (int y = roomTiles.cellBounds.min.y; y < roomTiles.cellBounds.max.y; y++)
                 {
                     for (int z = roomTiles.cellBounds.min.z; z < roomTiles.cellBounds.max.z; z++)
                     {
-                        if(tilemap.HasTile(new Vector3Int(x, y, z)))
+                        if(roomTiles.HasTile(new Vector3Int(x, y, z)))
                         {
-                            tilemap.SetTile(new Vector3Int(x, y, z), null);
+                            Vector3Int pos = Vector3Int.FloorToInt(roomTiles.GetCellCenterWorld(new Vector3Int(x, y, z)) / grid.GetComponent<Grid>().cellSize.x);
+                            tilemap.SetTile(pos, null);
                         }
                     }
                 }
