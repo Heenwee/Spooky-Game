@@ -433,7 +433,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 4.1515574, y: 1}
+    m_SensorSize: {x: 1.7762036, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2620,6 +2620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180bc08fe69dd0b4db2c1dbc59d2a4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 1265258134}
   loops: 10
   sideSectionLength: 25
   upSectionLength: 15
@@ -2630,6 +2631,8 @@ MonoBehaviour:
   tilemap: {fileID: 742023916}
   edgeOffset: 25
   distanceFromLine: 2
+  rooms:
+  - {fileID: 5174141858864339607, guid: 523e2265b711eea4b96d75530208d68d, type: 3}
 --- !u!4 &1920141228
 Transform:
   m_ObjectHideFlags: 0

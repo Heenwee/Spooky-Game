@@ -6,6 +6,8 @@ using UnityEditor;
 
 public class MapGeneration : MonoBehaviour
 {
+    public Transform grid;
+
     public static bool generated;
     bool mainBranchGenerated, branchesGenerated, tilesPlaced;
 
@@ -26,6 +28,7 @@ public class MapGeneration : MonoBehaviour
     public Tilemap tilemap;
     public int edgeOffset;
     public int distanceFromLine = 5;
+    public Tilemap[] rooms;
 
     // Start is called before the first frame update
     void Start()
@@ -105,6 +108,7 @@ public class MapGeneration : MonoBehaviour
     {
         List<Vector2> mainBranchList = new List<Vector2>();
         mainBranchList.Add(points[0]);
+        pointPos.Add(points[0]);
         Generate(points, loops, mainBranchList);
         branches.Add(mainBranchList);
         for (int i = 0; i < branchNr; i++) GenerateBranches();
@@ -157,6 +161,7 @@ public class MapGeneration : MonoBehaviour
         Debug.Log("Tiles Set");
 
         foreach(List<Vector2> list in branches) GenerateCorridors(list);
+        SpawnRooms();
 
         generated = true;
     }
@@ -180,6 +185,32 @@ public class MapGeneration : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    void SpawnRooms()
+    {
+        foreach(Vector2 p in pointPos)
+        {
+            var room = Instantiate(rooms[0], Vector2.zero, Quaternion.identity);
+            room.transform.parent = grid;
+            room.transform.position = p;
+
+            Tilemap roomTiles = room.GetComponent<Tilemap>();
+            for (int x = roomTiles.cellBounds.min.x; x < roomTiles.cellBounds.max.x; x++)
+            {
+                for (int y = roomTiles.cellBounds.min.y; y < roomTiles.cellBounds.max.y; y++)
+                {
+                    for (int z = roomTiles.cellBounds.min.z; z < roomTiles.cellBounds.max.z; z++)
+                    {
+                        if(tilemap.HasTile(new Vector3Int(x, y, z)))
+                        {
+                            tilemap.SetTile(new Vector3Int(x, y, z), null);
+                        }
+                    }
+                }
+            }
+            Destroy(room.gameObject);
         }
     }
 }
