@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
+using System.Linq;
 
 public class MapGeneration : MonoBehaviour
 {
     public GameObject grid;
 
     public static bool generated;
-    bool mainBranchGenerated, branchesGenerated, tilesPlaced;
+    //bool mainBranchGenerated, branchesGenerated, tilesPlaced;
 
     public int loops;
     public float sideSectionLength, upSectionLength;
@@ -29,14 +30,12 @@ public class MapGeneration : MonoBehaviour
     public int edgeOffset;
     public float distanceFromLine;
     public Tilemap[] rooms;
+    public int roomPosRand;
 
     // Start is called before the first frame update
     void Start()
     {
         generated = false;
-        mainBranchGenerated = false;
-        branchesGenerated = false;
-        tilesPlaced = false;
 
         pointPos = new List<Vector2>();
         branches = new List<List<Vector2>>();
@@ -190,11 +189,12 @@ public class MapGeneration : MonoBehaviour
 
     void SpawnRooms()
     {
-        foreach(Vector2 p in pointPos)
+        IEnumerable<Vector2> distinctPoints = pointPos.Distinct();
+        foreach(Vector2 p in distinctPoints)
         {
             var room = Instantiate(rooms[0], Vector2.zero, Quaternion.identity);
             room.transform.parent = grid.transform;
-            room.transform.position = p;
+            room.transform.position = p + new Vector2(Random.Range(-roomPosRand/2, roomPosRand/2),0);
 
             Tilemap roomTiles = room.GetComponent<Tilemap>();
             roomTiles.CompressBounds();

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: Castle_Interiour
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -8481471932251566763, guid: 6a5dbb362ac3075429b9206ecdf3dc24, type: 3}
+  m_DefaultSprite: {fileID: -2654391485479121457, guid: 6a5dbb362ac3075429b9206ecdf3dc24, type: 3}
   m_DefaultGameObject: {fileID: 7989842989912044372, guid: 10a683abb6439934a81530bd8c9d4cf8, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules:
